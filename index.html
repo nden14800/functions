@@ -651,6 +651,7 @@
         </section>
 
         
+        
         <!-- Simulation Tool: Interactive Lab -->
         <section class="content-card bg-white border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
             <h2 class="chapter-title text-slate-900 dark:text-slate-100">Lab：関数グラフ・シミュレーター</h2>
@@ -658,26 +659,20 @@
                 <p class="mb-8">
                     関数 $y = ax$ は、比例の法則を表す。係数 $a$ の値を変えることで、直線の傾きがどのように変化するかを観察しよう。
                 </p>
-                
                 <div class="diagram-box bg-slate-50 dark:bg-slate-950 p-10 rounded-3xl border border-slate-200 dark:border-slate-800">
                     <div class="flex flex-col md:flex-row gap-12 items-center w-full">
                         <div class="relative bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-inner border border-slate-100 dark:border-slate-800" style="width: 350px; height: 350px;">
                             <canvas id="funcSimCanvas" width="320" height="320"></canvas>
                         </div>
-                        
                         <div class="flex-1 space-y-8 w-full">
                             <div class="text-center p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
                                 <p class="text-xs font-bold text-slate-400 mb-2 uppercase">現在の関数</p>
                                 <p class="text-3xl font-serif">y = <span id="funcValA" class="text-indigo-600">1.0</span>x</p>
                             </div>
-                            
                             <div>
-                                <label class="flex justify-between text-sm font-bold text-slate-500 mb-3">
-                                    <span>傾き (a)</span>
-                                </label>
+                                <label class="flex justify-between text-sm font-bold text-slate-500 mb-3"><span>傾き (a)</span></label>
                                 <input type="range" id="funcSliderA" min="-30" max="30" value="10" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                             </div>
-                            
                             <p class="text-sm text-slate-500 leading-relaxed bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-xl">
                                 $a$ が正のときは右上がり、負のときは右下がりになります。また、$a$ の絶対値が大きくなるほど、傾きは急になります。
                             </p>
@@ -686,7 +681,6 @@
                 </div>
             </div>
         </section>
-
         <script>
             function initFuncSim() {
                 const canvas = document.getElementById('funcSimCanvas');
@@ -694,15 +688,11 @@
                 const ctx = canvas.getContext('2d');
                 const slider = document.getElementById('funcSliderA');
                 const valA = document.getElementById('funcValA');
-                
                 function draw() {
                     const a = parseFloat(slider.value) / 10;
                     valA.textContent = a.toFixed(1);
-                    
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     const mid = canvas.width / 2;
-                    
-                    // Grid
                     ctx.strokeStyle = '#e2e8f0';
                     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ctx.strokeStyle = '#1e293b';
                     ctx.beginPath();
@@ -711,22 +701,10 @@
                         ctx.moveTo(0, i); ctx.lineTo(canvas.width, i);
                     }
                     ctx.stroke();
-                    
-                    // Axes
-                    ctx.strokeStyle = '#94a3b8';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.moveTo(mid, 0); ctx.lineTo(mid, canvas.height);
-                    ctx.moveTo(0, mid); ctx.lineTo(canvas.width, mid);
-                    ctx.stroke();
-                    
-                    // Line
-                    ctx.strokeStyle = '#6366f1';
-                    ctx.lineWidth = 3;
-                    ctx.beginPath();
-                    ctx.moveTo(0, mid + (mid * a));
-                    ctx.lineTo(canvas.width, mid - (mid * a));
-                    ctx.stroke();
+                    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2; ctx.beginPath();
+                    ctx.moveTo(mid, 0); ctx.lineTo(mid, canvas.height); ctx.moveTo(0, mid); ctx.lineTo(canvas.width, mid); ctx.stroke();
+                    ctx.strokeStyle = '#6366f1'; ctx.lineWidth = 3; ctx.beginPath();
+                    ctx.moveTo(0, mid + (mid * a)); ctx.lineTo(canvas.width, mid - (mid * a)); ctx.stroke();
                 }
                 slider.addEventListener('input', draw);
                 draw();
